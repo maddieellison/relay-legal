@@ -14,15 +14,11 @@ serves them, via GitHub Pages.
 These same URLs are set in the app at `mobile/src/lib/legal.ts`, and go into the
 App Store Connect "Privacy Policy URL" and "Support URL" fields.
 
-## Still to fill in
+## Company details
 
-Values highlighted in **yellow** on the pages are placeholders. Replace them in
-all four HTML files before submitting to the App Store:
-
-- `[Your Company] Ltd` — the registered company name
-- `[company number]` — Companies House number
-- `[registered office address]` — the registered office
-- `support@yourdomain.com` — a real, monitored support inbox
+These pages name **MES Genesis Co Ltd** (company number 17386793, registered
+office 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ) as the data
+controller, with `app@mesgenesis.com` as the contact address.
 
 Editing any file and pushing to `main` republishes within about a minute.
 
