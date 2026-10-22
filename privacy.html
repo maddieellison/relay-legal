@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Privacy Policy — Relay</title>
+  <title>Privacy Policy: Relay</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -18,11 +18,11 @@
 
   <main class="wrap">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: 11 August 2026</p>
+    <p class="updated">Last updated: 22 October 2026</p>
 
     <p>
       Relay ("<strong>Relay</strong>", "we", "us") is an app that makes phone calls on your
-      behalf using an automated AI assistant — for example, booking a restaurant abroad or
+      behalf using an automated AI assistant, for example booking a restaurant abroad or
       getting a quote from a local business. This policy explains what personal data we
       collect, why, who we share it with, and the choices you have. We've tried to keep it in
       plain English.
@@ -33,18 +33,18 @@
       MES Genesis Co Ltd, a company registered in England &amp; Wales
       (company number 17386793), registered office
       71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.<br />
-      Contact: <a href="mailto:app@mesgenesis.com">app@mesgenesis.com</a>
+      Contact: <a href="mailto:support@callwithrelay.com">support@callwithrelay.com</a>
     </div>
 
     <h2>1. The short version</h2>
     <ul>
       <li>We collect the account and call details we need to place calls for you.</li>
       <li>Every call opens by clearly disclosing that it is an AI assistant calling on your behalf.</li>
-      <li>Calls are recorded to run and improve the service; <strong>recordings are automatically deleted after 7 days.</strong> Written transcripts are kept until you delete them.</li>
+      <li>Calls are recorded so Relay can deliver and verify the result, diagnose failures and keep the service safe. We ask our voice provider to delete each recording within 7 days, but a provider error can delay deletion; we keep retrying and do not claim deletion until it is confirmed. Written transcripts are kept until you delete your account.</li>
       <li>We use trusted service providers (listed below) to place calls and run the app. Some are outside the UK/EU.</li>
-      <li>You can choose, per call, to let us pass your phone number to the business — off unless you switch it on, and only given if they ask.</li>
+      <li>You can choose, per call, to let us pass your phone number to the business: off unless you switch it on, and only given if they ask.</li>
       <li>We never sell your data, and we don't use it for advertising or tracking.</li>
-      <li>You can delete your account — and everything in it — at any time from inside the app.</li>
+      <li>You can delete your Relay account and the personal content held in Relay at any time from inside the app. Provider deletion requests may finish afterwards, and processors may retain limited records where required by law or their service obligations.</li>
     </ul>
 
     <h2>2. What we collect</h2>
@@ -67,25 +67,60 @@
       </tr>
       <tr>
         <td>Purchase data</td>
-        <td>Records of credit packs you buy (handled by Apple and RevenueCat — we never see your card details)</td>
+        <td>Records of credit packs you buy (handled by Apple and RevenueCat; we never see your card details)</td>
         <td>To add credits to your account and support refunds</td>
       </tr>
       <tr>
         <td>Basic technical data</td>
-        <td>App version, error logs, and coarse device information</td>
+        <td>App version and device platform, sent with a support request you make</td>
         <td>To keep the app working and fix problems</td>
       </tr>
+      <tr>
+        <td>Support messages</td>
+        <td>What you type to Relay AI Support, the earlier messages in that support case, and structured details of your calls and credits that it looks up to answer you. Relay AI Support cannot access call audio, transcript text or phone numbers</td>
+        <td>To answer your questions and sort out problems</td>
+      </tr>
     </table>
+
+    <h3>Relay AI Support</h3>
+    <p>
+      When you use Relay AI Support, Relay sends Anthropic the message you submit, up to 40
+      earlier customer-visible messages in that case, Relay's support guidance, and the bounded
+      call or credit facts needed to answer. Those facts can include the business name, task and
+      language, call status and duration, outcome, retry count, whether a transcript or recording
+      exists, and whether a credit was returned. They do not include call audio, transcript text,
+      phone numbers or another customer's data. We do not opt these API messages into AI-model
+      training.
+    </p>
+    <p>
+      Relay AI Support can answer product questions and explain the structured facts it can see.
+      It cannot approve refunds, move credits or investigate a recording. A complaint, refund
+      request, privacy or recording concern, disputed action, legal issue, or anything the AI is
+      unsure about is sent to Relay's support team automatically; you can also send any case to
+      the team yourself. The team receives the conversation so far and the relevant case details.
+      Escalation does not promise that a person has already read the case or that a reply will
+      arrive by a particular time.
+    </p>
 
     <h2>3. The person you call, and call recording</h2>
     <p>
       When Relay places a call, the assistant's <strong>first words disclose that it is an
       automated AI assistant calling on behalf of a customer</strong>, and that the call may be
       recorded. If the person does not wish to speak with an AI, the assistant apologises and
-      ends the call. We record calls to deliver the result to you, to auto-refund a credit if a
-      call fails, and to keep the service safe and accurate. <strong>Call recordings are deleted
-      automatically 7 days after the call.</strong> The written transcript and outcome are kept
-      until you delete the call or your account.
+      ends the call. We record calls to deliver and verify the result, decide whether a call
+      credit should be returned, diagnose failures, and keep the service safe and accurate.
+      We do not use the audio recordings to train AI models or for general product-improvement
+      analysis. Written transcripts and structured outcomes may be used to operate Relay,
+      investigate problems and improve its reliability.
+    </p>
+    <p>
+      Starting six days after a call, an automated job asks our voice provider, Vapi, to delete
+      its copy and clears Relay's recording link. It retries failures and records deletion only
+      when Vapi confirms it, or repeatedly confirms that the call is no longer present. We aim
+      to complete this within 7 days, but <strong>we cannot promise that every provider copy is
+      gone within 7 days</strong>: a provider error or refusal may require manual follow-up and
+      may make deletion take longer. The written transcript and outcome are kept until you
+      delete your account.
     </p>
 
     <h2>4. Sharing your phone number with a business</h2>
@@ -93,17 +128,17 @@
       Many businesses will not hold a booking without a contact number. You can choose,
       <strong>for each individual call</strong>, to let the assistant pass on your phone number.
       This is <strong>off unless you switch it on</strong>, it resets for every new call, and the
-      assistant will only give the number out <strong>if the business asks for it</strong> — it
+      assistant will only give the number out <strong>if the business asks for it</strong>, and it
       never volunteers it. If you don't switch it on, the assistant refuses to give out any
       number and offers to have you contact them directly instead. Your number is stored with
-      that single call request and is deleted when you delete the call or your account.
+      that single call request and is deleted when you delete your account.
     </p>
 
     <h2>5. Why we're allowed to use your data (legal bases)</h2>
     <ul>
-      <li><strong>To provide the service you asked for</strong> (placing calls, managing credits, showing results) — performance of our contract with you.</li>
-      <li><strong>To keep the service secure, reliable and lawful</strong>, and to improve it — our legitimate interests, balanced against your rights.</li>
-      <li><strong>Where required by law</strong> — e.g. keeping basic transaction records.</li>
+      <li><strong>To provide the service you asked for</strong> (placing calls, managing credits, showing results): performance of our contract with you.</li>
+      <li><strong>To keep the service secure, reliable and lawful</strong>, and to improve it: our legitimate interests, balanced against your rights.</li>
+      <li><strong>Where required by law</strong>, for example keeping basic transaction records.</li>
     </ul>
 
     <h2>6. Who we share data with (our service providers)</h2>
@@ -112,9 +147,10 @@
       <tr><th>Provider</th><th>What they do</th><th>Where</th></tr>
       <tr><td>Vapi</td><td>Runs the live voice call (connects the call, speech-to-text and text-to-speech)</td><td>USA</td></tr>
       <tr><td>Twilio</td><td>Provides the phone number and telephone network to place the call</td><td>USA</td></tr>
-      <tr><td>Anthropic (Claude)</td><td>The AI that speaks on the call and summarises the outcome</td><td>USA</td></tr>
+      <tr><td>Anthropic (Claude)</td><td>The AI that speaks on the call, reads call transcripts to produce structured outcomes, and writes replies in Relay AI Support</td><td>USA</td></tr>
       <tr><td>Supabase</td><td>Our database, sign-in and secure backend</td><td>EU / USA</td></tr>
       <tr><td>Apple</td><td>Sign in with Apple, App Store purchases, push notifications</td><td>USA / global</td></tr>
+      <tr><td>Expo (push notifications)</td><td>Delivers the &ldquo;your call is done&rdquo; notification to your phone; receives your device push token and the text of the notification</td><td>USA</td></tr>
       <tr><td>RevenueCat</td><td>Manages in-app purchases of credit packs</td><td>USA</td></tr>
     </table>
     <p>
@@ -126,8 +162,9 @@
 
     <h2>7. How long we keep it</h2>
     <ul>
-      <li><strong>Call recordings:</strong> deleted automatically 7 days after the call.</li>
-      <li><strong>Transcripts, translations and outcomes:</strong> kept until you delete the call or your account.</li>
+      <li><strong>Call recordings:</strong> deletion is scheduled with Vapi from day 6 and targeted for completion within 7 days. Failed or refused provider deletions are retried or flagged for manual follow-up and can take longer.</li>
+      <li><strong>Transcripts, translations and outcomes:</strong> kept until you delete your account.</li>
+      <li><strong>Support messages and case details:</strong> kept while your account is active. The message, relevant earlier messages and structured call or credit details are sent to Anthropic's commercial API to generate a reply. Under Anthropic's standard API terms, API inputs and outputs are deleted from its systems within 30 days, except where a different retention agreement applies or longer retention is needed for safety or legal reasons.</li>
       <li><strong>Account &amp; call-request data:</strong> kept while your account is active.</li>
       <li><strong>Purchase/transaction records:</strong> kept as required for tax and accounting.</li>
     </ul>
@@ -135,8 +172,8 @@
     <h2>8. Your rights</h2>
     <p>Under UK/EU data protection law you can ask to access, correct, delete, or export your data, object to certain processing, or withdraw consent. You can:</p>
     <ul>
-      <li><strong>Delete everything yourself</strong> — Settings → Delete account permanently removes your account, calls, transcripts and recordings.</li>
-      <li><strong>Contact us</strong> at <a href="mailto:app@mesgenesis.com">app@mesgenesis.com</a> for any other request. We respond within one month.</li>
+      <li><strong>Delete your Relay account and content</strong>: Settings → Delete account immediately removes your account, calls, transcripts, support conversations and stored recording links from Relay's database. Relay asks Vapi to delete provider call records before deletion where possible and queues any unconfirmed deletion to retry afterwards. Relay does not directly delete Twilio network records, Apple or RevenueCat transaction records, or other processor records; those providers may retain limited data under their own service, security and legal obligations. De-identified anti-abuse and support-audit events, and transaction records we must keep for tax, accounting or legal reasons, may also remain.</li>
+      <li><strong>Contact us</strong> at <a href="mailto:support@callwithrelay.com">support@callwithrelay.com</a> for any other request. We respond within one month.</li>
     </ul>
     <p>
       You also have the right to complain to the UK Information Commissioner's Office
@@ -152,7 +189,7 @@
     <h2>11. Contact</h2>
     <p>
       Questions about your privacy? Email
-      <a href="mailto:app@mesgenesis.com">app@mesgenesis.com</a>.
+      <a href="mailto:support@callwithrelay.com">support@callwithrelay.com</a>.
     </p>
   </main>
 
