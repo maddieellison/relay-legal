@@ -40,7 +40,7 @@
     <ul>
       <li>We collect the account and call details we need to place calls for you.</li>
       <li>Every call opens by clearly disclosing that it is an AI assistant calling on your behalf.</li>
-      <li>Calls are recorded so Relay can deliver and verify the result, diagnose failures and keep the service safe. We ask our voice provider to delete each recording within 7 days, but a provider error can delay deletion; we keep retrying and do not claim deletion until it is confirmed. Written transcripts are kept until you delete your account.</li>
+      <li>Calls are recorded so Relay can deliver and verify the result, diagnose failures and keep the service safe. Our voice provider, Vapi, keeps eligible call recordings and transcripts for up to 14 days and then deletes them; a provider error can delay deletion, and we do not claim deletion until it is confirmed. This does not necessarily cover audio, call logs or metadata that our telephone carrier (Twilio) or other providers keep under their own policies. Written transcripts are kept until you delete your account.</li>
       <li>We use trusted service providers (listed below) to place calls and run the app. Some are outside the UK/EU.</li>
       <li>You can choose, per call, to let us pass your phone number to the business: off unless you switch it on, and only given if they ask.</li>
       <li>We never sell your data, and we don't use it for advertising or tracking.</li>
@@ -114,13 +114,16 @@
       investigate problems and improve its reliability.
     </p>
     <p>
-      Starting six days after a call, an automated job asks our voice provider, Vapi, to delete
-      its copy and clears Relay's recording link. It retries failures and records deletion only
-      when Vapi confirms it, or repeatedly confirms that the call is no longer present. We aim
-      to complete this within 7 days, but <strong>we cannot promise that every provider copy is
-      gone within 7 days</strong>: a provider error or refusal may require manual follow-up and
-      may make deletion take longer. The written transcript and outcome are kept until you
-      delete your account.
+      Our voice provider, Vapi, keeps eligible call recordings and transcripts for up to 14 days
+      and then deletes them. Starting six days after a call, an automated job also asks Vapi to
+      delete its copy sooner and clears Relay's recording link; it retries failures and records
+      deletion only when Vapi confirms it, or repeatedly confirms that the call is no longer
+      present. <strong>We cannot promise that every provider copy is gone earlier than the
+      provider's 14-day period</strong>: a provider error or refusal may require manual follow-up
+      and may make deletion take longer. This applies to the content Vapi stores for the call. It
+      does not necessarily cover audio, call logs or metadata that our telephone carrier (Twilio)
+      or other providers keep under their own policies. The written transcript and outcome we hold
+      are kept until you delete your account.
     </p>
 
     <h2>4. Sharing your phone number with a business</h2>
@@ -162,7 +165,7 @@
 
     <h2>7. How long we keep it</h2>
     <ul>
-      <li><strong>Call recordings:</strong> deletion is scheduled with Vapi from day 6 and targeted for completion within 7 days. Failed or refused provider deletions are retried or flagged for manual follow-up and can take longer.</li>
+      <li><strong>Call recordings and provider-held transcripts:</strong> kept by our voice provider (Vapi) for up to 14 days, then deleted; an earlier deletion request is sent from day 6, and failed or refused provider deletions are retried or flagged for manual follow-up and can take longer. This does not necessarily cover audio, logs or metadata held by our telephone carrier (Twilio) or other providers under their own policies.</li>
       <li><strong>Transcripts, translations and outcomes:</strong> kept until you delete your account.</li>
       <li><strong>Support messages and case details:</strong> kept while your account is active. The message, relevant earlier messages and structured call or credit details are sent to Anthropic's commercial API to generate a reply. Under Anthropic's standard API terms, API inputs and outputs are deleted from its systems within 30 days, except where a different retention agreement applies or longer retention is needed for safety or legal reasons.</li>
       <li><strong>Account &amp; call-request data:</strong> kept while your account is active.</li>
