@@ -1,0 +1,19 @@
+diff --git a/mobile/src/lib/legal.ts b/mobile/src/lib/legal.ts
+--- a/mobile/src/lib/legal.ts
++++ b/mobile/src/lib/legal.ts
+@@ -12,11 +12,11 @@
+ // under the "maddieellison" account. Change LEGAL_BASE_URL if you host them
+ // elsewhere (your own domain, etc.).
+ 
+-const LEGAL_BASE_URL = 'https://maddieellison.github.io/relay-legal';
++const LEGAL_BASE_URL = 'https://callwithrelay.com';
+ 
+-export const PRIVACY_URL = `${LEGAL_BASE_URL}/privacy.html`;
+-export const TERMS_URL = `${LEGAL_BASE_URL}/terms.html`;
+-export const SUPPORT_URL = `${LEGAL_BASE_URL}/support.html`;
++export const PRIVACY_URL = `${LEGAL_BASE_URL}/privacy`;
++export const TERMS_URL = `${LEGAL_BASE_URL}/terms`;
++export const SUPPORT_URL = `${LEGAL_BASE_URL}/support`;
+ 
+ // Shown to the user as the address for support / data requests, and the address
+ // the four docs/*.html pages publish. Changed from app@mesgenesis.com on
