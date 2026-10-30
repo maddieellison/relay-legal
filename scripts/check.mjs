@@ -14,7 +14,9 @@ for (const file of files){
   assert.match(html,/<main id="main"/);
   assert.match(html,/name="description"/);
   assert.match(html,/rel="canonical"/);
-  assert.doesNotMatch(html,/<script\b|<iframe\b|{{|javascript:|href="#"/);
+  assert.doesNotMatch(html,/<iframe\b|{{|javascript:|href="#"/);
+  if(file==='index.html') assert.match(html, /<script src="\/assets\/journey.js" defer><\/script>/);
+  else assert.doesNotMatch(html, /<script\b/);
   for(const img of html.matchAll(/<img\b[^>]+>/g)) assert.match(img[0],/alt="[^"]*"/);
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
   assert.equal(ids.length,new Set(ids).size,`${file}: unique IDs`);
@@ -38,5 +40,5 @@ const css=await read('style.css');
 assert.match(css,/prefers-reduced-motion/);assert.match(css,/:focus-visible/);
 for(const [,asset] of css.matchAll(/url\('\.\/([^']+)'\)/g)) await stat(path.join(root,'dist',asset));
 async function total(dir){let bytes=0;for(const entry of await readdir(dir,{withFileTypes:true})){const p=path.join(dir,entry.name);bytes+=entry.isDirectory()?await total(p):(await stat(p)).size;}return bytes;}
-console.log(`PASS: ${files.length} pages, ${links} internal link/asset references, exact legal/support text parity, legacy routes, metadata, font files, reduced motion, focus styles. No client JavaScript.`);
+console.log(`PASS: ${files.length} pages, ${links} internal link/asset references, exact legal/support text parity, legacy routes, metadata, font files, reduced motion, focus styles. Single local progressive-enhancement script; no third-party scripts.`);
 console.log(`Total static output: ${((await total(path.join(root,'dist')))/1024).toFixed(0)} KB (before transport compression).`);

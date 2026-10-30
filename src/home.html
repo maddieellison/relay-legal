@@ -1,36 +1,37 @@
 <main id="main" tabindex="-1">
   <section class="hero wrap" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="eyebrow"><span class="short-rule"></span> Your AI calling assistant</p>
-      <h1 id="hero-title">Your plans.<br>Your time.<br><em>Relay’s call.</em></h1>
-      <p class="hero-description">The phone calls on your to-do list, handled.<br class="desktop-break"> Tell Relay what you need. It calls for you<br class="desktop-break"> and brings back the outcome.</p>
-      <div class="cta-row">{{DOWNLOAD}}<a class="text-link" href="#how-it-works">See how it works <span aria-hidden="true">↘</span></a></div>
-      <p class="small-note">Made for iPhone. For the everyday calls.</p>
-    </div>
-    <div class="hero-product">
-      <div class="product-stage">
-        <div class="stage-label"><span>FROM TO-DO</span><span>TO HEARD BACK</span></div>
-        <figure class="screen screen-request">{{MEDIA:request}}</figure>
-        <figure class="screen screen-outcome">{{MEDIA:outcome}}</figure>
-        <div class="stage-footer"><span class="brand-glyph" aria-hidden="true">•))</span><span>A little less on your list.</span></div>
+    <p class="eyebrow">Your AI calling assistant for iPhone</p>
+    <h1 id="hero-title">Your plans. Your time.<br><em>Relay’s call.</em></h1>
+    <p class="hero-description">The phone calls on your to-do list, handled.<br>Tell Relay what you need. It calls for you and brings back the outcome.</p>
+    <div class="cta-row">{{DOWNLOAD}}<a class="text-link" href="#how-it-works">See how it works <span aria-hidden="true">↓</span></a></div>
+  </section>
+
+  <section class="journey" id="how-it-works" aria-labelledby="journey-title" data-stage="request">
+    <div class="journey-sticky">
+      <header class="journey-heading"><p class="eyebrow">A small handover</p><h2 id="journey-title">From your to-do list. <em>To heard back.</em></h2></header>
+      <div class="journey-stage wrap">
+        <article class="journey-chapter" id="relay-request" data-chapter="request" aria-labelledby="request-title" tabindex="-1">
+          <div class="chapter-copy"><p class="eyebrow">01 / Your request</p><h3 id="request-title">Tell Relay<br><em>what you need.</em></h3><p>Choose who to call, add the details and review the plan. Relay takes it from there.</p></div>
+          <figure class="chapter-phone">{{MEDIA:request}}</figure>
+          <div class="chapter-note"><span class="brand-glyph" aria-hidden="true">•))</span><p class="eyebrow">Before the first hello</p><p>You review the plan before Relay starts the call.</p><span class="chapter-caption">Your request. Your say.</span></div>
+        </article>
+        <article class="journey-chapter" id="relay-call" data-chapter="call" aria-labelledby="call-title" tabindex="-1">
+          <div class="chapter-copy"><p class="eyebrow">02 / The conversation</p><h3 id="call-title">Relay makes<br><em>the call.</em></h3><p>Your assistant speaks with the person who answers. Follow the conversation in the app as it happens.</p></div>
+          <figure class="chapter-phone">{{MEDIA:call}}</figure>
+          <div class="chapter-note"><span class="brand-glyph" aria-hidden="true">•))</span><p class="eyebrow">Clear from the start</p><p>Relay introduces itself as an AI assistant calling on your behalf.</p><span class="chapter-caption">A conversation, handled.</span></div>
+        </article>
+        <article class="journey-chapter" id="relay-outcome" data-chapter="outcome" aria-labelledby="outcome-title" tabindex="-1">
+          <div class="chapter-copy"><p class="eyebrow">03 / The outcome</p><h3 id="outcome-title">The answer.<br><em>In your hands.</em></h3><p>Find out what happened, even when the answer is no. Review the outcome and decide what comes next.</p></div>
+          <figure class="chapter-phone">{{MEDIA:outcome}}</figure>
+          <div class="chapter-note"><span class="brand-glyph" aria-hidden="true">•))</span><p class="eyebrow">All there to read</p><p>Come back to the summary and written transcript in the app.</p><span class="chapter-caption">A little less on your list.</span></div>
+        </article>
       </div>
-      <p class="stage-caption">01 — A request in. An outcome back.</p>
-    </div>
-  </section>
-
-  <section class="how wrap section" id="how-it-works" aria-labelledby="how-title">
-    <div class="section-heading"><p class="eyebrow">A small handover</p><h2 id="how-title">You say what.<br><em>Relay handles the call.</em></h2></div>
-    <ol class="steps">
-      <li><span class="step-number">01</span><div><h3>Tell Relay what you need.</h3><p>Choose who to call, add your request and review the plan before the call starts.</p></div></li>
-      <li><span class="step-number">02</span><div><h3>Relay makes the call.</h3><p>Your AI assistant introduces itself, explains your request and speaks with the person who answers.</p></div></li>
-      <li><span class="step-number">03</span><div><h3>Review the outcome.</h3><p>Read what happened and the call transcript in the app. A clear answer, even when the answer is no.</p></div></li>
-    </ol>
-  </section>
-
-  <section class="showcase" aria-labelledby="showcase-title">
-    <div class="wrap showcase-grid">
-      <div class="showcase-copy"><p class="eyebrow">From the first hello</p><h2 id="showcase-title">The conversation.<br><em>Without making<br>the call yourself.</em></h2><p>Set out the details before Relay calls. Follow the conversation in the app, then come back to the summary and transcript.</p><a class="text-link" href="{{BASE}}/privacy/">How your call data is handled <span aria-hidden="true">↗</span></a></div>
-      <figure class="showcase-screen"><div class="screen">{{MEDIA:call}}</div><figcaption>02 — Follow the conversation in Relay.</figcaption></figure>
+      <nav class="journey-nav" aria-label="How Relay works chapters">
+        <a href="#relay-request"><span>01</span> Your request</a>
+        <a href="#relay-call"><span>02</span> The call</a>
+        <a href="#relay-outcome"><span>03</span> The outcome</a>
+      </nav>
+      <p class="journey-hint">Scroll to follow the call <span aria-hidden="true">↓</span></p>
     </div>
   </section>
 

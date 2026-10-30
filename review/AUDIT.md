@@ -79,17 +79,17 @@ payment/RevenueCat/StoreKit, `company-os/`, workspace `.vercel/`, live Pages and
 - HTTP `/privacy` redirects to `/privacy/`; `/support/` and `/terms.html` return
   200. All three legal/support pages visited independently in the browser.
 - Homepage reviewed at 320, 390, 768, 1024, 1440px: no horizontal overflow;
-  complete screenshot slots stay inside the hero panel. Initial cropping fixed.
+  no horizontal overflow in the original static design. The updated scroll design is checked separately below.
 - Privacy checked at 320, 390, 768, 1440px: tables scroll inside labelled,
   keyboard-accessible regions. Support fits 320, 390, 768, 1440px.
 - One h1 per page; landmarks; language; image alt attributes; labelled navigation;
-  heading anchors; visible focus; skip link verified to focus the main landmark; reduced-motion styles; no animation.
+  heading anchors; visible focus; skip link verified to focus the main landmark; reduced-motion support; the updated story uses short opacity/colour transitions only.
 - Text contrast: ink/paper 14.95:1, muted/paper 5.06:1, green/paper 6.71:1,
   green/tint 6.57:1, light/deep 8.99:1, caption/deep 8.18:1.
 - No browser errors or warnings; no broken loaded images. Below-fold imagery
   lazy loads; explicit dimensions prevent image-induced layout shifts.
-- Complete preview approximately 553 KB before compression/final screenshots.
-  Zero client JS, third-party fonts, analytics or cookies.
+- Complete preview approximately 562 KB before compression/final screenshots.
+  One local 2.8 KB homepage scroll script; no third-party scripts/fonts, analytics or cookies. Legal/support pages load no JavaScript.
 - Production build correctly refuses missing launch inputs before changing the
   existing preview. Workflow is manual-only and cannot publish this incomplete state.
 
@@ -111,3 +111,38 @@ saved fields and support mailbox delivery were not inspected.
    Terms will be at `https://callwithrelay.com/terms`.
 
 The deferred app patch passes `git apply --check` against the inspected active checkout; it was not applied.
+
+## Founder-requested Flighty scroll revision
+
+Reference inspected at https://flighty.com/ on 30 October. Applied its central,
+pinned phone and scroll chapter pattern using Relay branding; no reference assets
+or claims were copied. Replaced the static two-phone hero/showcase with a centred
+hero and a single phone position. Screens and copy change through request, call,
+outcome; backgrounds progress from warm paper to deep forest green to green tint.
+
+Additional source changes: `src/home.html`, `style.css`, `scripts/build.mjs`,
+`scripts/serve.mjs` (JavaScript MIME type), `scripts/check.mjs`, `package.json`,
+`README.md`, this audit; added `assets/journey.js` and `scripts/journey-test.mjs`.
+All previous app/backend/legal-content/production scope boundaries still apply.
+
+The scroll behaviour uses ordinary browser scrolling and CSS sticky positioning.
+A single scheduled animation-frame callback selects the chapter. Native touch and
+wheel input are never cancelled. Chapter links support keyboard focus and deep
+links. Inactive chapters are removed from accessibility navigation. Without JS,
+with reduced motion, or below 620px viewport height, all chapters stay in a normal
+static sequence. Unit tests cover forward/reverse scroll, one accessible active
+screen, chapter navigation/deep links and switching motion preferences.
+
+Browser geometry at 320×640, 390×780, 768×900 and 1280×900: no horizontal
+page overflow, phone centres exactly at half viewport width, phone clears the
+chapter controls, controls fit inside the viewport. Native scroll from request to
+call changes active screen while the phone stays centred. Revised visual captures
+are `review/desktop-request.png`, `review/desktop-call.png` and
+`review/mobile-call.png`; older full-page captures are superseded.
+
+Final browser review also checked 1280×720: adjusted the desktop phone scaling
+to leave 36px above chapter controls. At 390×568 the enhancement turns off and
+all three chapters are visible in the normal document. Native reverse scrolling
+returns from outcome to call; Return on a chapter link focuses its active article.
+The browser reported no warnings or errors. Build, syntax checks, route/content
+checks, interaction tests and `git diff --check` pass after this correction.

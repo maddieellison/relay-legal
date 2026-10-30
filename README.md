@@ -20,7 +20,9 @@ and `noindex`. Deploy only `dist/`, never the source directory.
 
 ## Source
 
-- `src/home.html`: homepage and screenshot slots.
+- `src/home.html`: centred hero and three-chapter scrolling phone story.
+- `assets/journey.js`: 2.8 KB native-scroll enhancement; no dependencies.
+- `scripts/journey-test.mjs`: scroll, keyboard and reduced-motion behaviour tests.
 - `src/legal/{privacy,terms,support}.html`: byte-for-byte published source documents.
 - `style.css`: responsive design, local fonts, focus and reduced-motion styles.
 - `site.config.json`: screenshot assets, App Store link and canonical domain.
@@ -110,3 +112,14 @@ Clean paths redirect to trailing-slash directories; both work. Legacy `.html`
 pages remain available. App Store Connect's saved fields were not inspected or
 changed. No app or backend code, live hosting, DNS, payments or Biz OS infrastructure
 was modified. There are no analytics, cookies, forms, web purchases or new services.
+
+## Scroll design direction
+
+The founder supplied [Flighty](https://flighty.com/) as an interaction reference.
+Relay keeps its own icon, palette, fonts and copy. One central phone stays pinned
+as its screenshot, editorial copy and background change through request → call →
+outcome. The chapter links work with keyboard and native scrolling is never
+intercepted. The homepage loads a single 2.8 KB script; legal pages load no scripts.
+Without JavaScript, with reduced motion, or on viewports shorter than 620px,
+all three stages appear in a normal static sequence. Changes to the motion
+preference are handled without reloading. No Flighty assets or code were copied.

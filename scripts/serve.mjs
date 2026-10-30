@@ -3,7 +3,7 @@ import {readFile, stat} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
-const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.jpeg':'image/jpeg','.ttf':'font/ttf','.txt':'text/plain','.xml':'application/xml'};
+const mime = {'.js':'text/javascript; charset=utf-8','.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.jpeg':'image/jpeg','.ttf':'font/ttf','.txt':'text/plain','.xml':'application/xml'};
 const server = http.createServer(async(req,res)=>{
   try {
     const pathname = decodeURIComponent(new URL(req.url,'http://localhost').pathname);
