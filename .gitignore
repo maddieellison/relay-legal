@@ -1,0 +1,5 @@
+dist/
+review/*.png
+review/*.json
+node_modules/
+.DS_Store
