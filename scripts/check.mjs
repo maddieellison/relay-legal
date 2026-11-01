@@ -19,9 +19,9 @@ for (const file of files){
   assert.doesNotMatch(html,/<iframe\b|{{|javascript:|href="#"/);
   if(file==='index.html') {
     assert.match(html, /<script src="\/assets\/journey.js" defer><\/script>/);
-    assert.match(html, /<video controls playsinline preload="metadata" poster="\/assets\/media\/relay-call-walkthrough-poster\.jpg" aria-label="Relay app walkthrough">/);
-    assert.match(html, /<source src="\/assets\/media\/relay-call-walkthrough\.mp4" type="video\/mp4">/);
-    assert.doesNotMatch(html, /demo-disclosure|<figcaption/);
+    assert.match(html, /<video controls playsinline preload="metadata" poster="\/assets\/media\/relay-scripted-demo-poster\.png" aria-label="Relay scripted local demonstration video" aria-describedby="demo-disclosure">/);
+    assert.match(html, /<source src="\/assets\/media\/relay-scripted-demo-18s\.mp4" type="video\/mp4">/);
+    assert.match(html, /<strong>Scripted local demonstration\.<\/strong>/);
     assert.doesNotMatch(html, /<video[^>]+autoplay/);
     assert.match(html, /href="https:\/\/apps\.apple\.com\/gb\/app\/relay\/id6804118976"/);
   }
