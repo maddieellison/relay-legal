@@ -13,6 +13,12 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>'
 const missing = [];
 if (!config.appStoreUrl || !config.appStoreVerifiedOn) missing.push('verified live App Store link');
 if (config.appStoreUrl && !/^https:\/\/apps\.apple\.com\/(?:[a-z]{2}\/)?app\/(?:[^/]+\/)?id6804118976(?:\?.*)?$/.test(config.appStoreUrl)) throw new Error('App Store URL must match Relay’s app ID 6804118976');
+const demo = config.demo;
+if (!demo || !demo.approved || !/^assets\/media\/[a-zA-Z0-9_-]+\.mp4$/.test(demo.videoPath) || !/^assets\/media\/[a-zA-Z0-9_-]+\.(png|webp|jpe?g)$/.test(demo.posterPath) || !Number.isFinite(demo.durationSeconds) || demo.durationSeconds <= 0 || !demo.description) {
+  throw new Error('Invalid or unapproved demo media');
+}
+await stat(path.join(root, demo.videoPath));
+await stat(path.join(root, demo.posterPath));
 const slots = {
   request: {number:'01', title:'Your request', alt:'Relay request screen'},
   call: {number:'02', title:'The conversation', alt:'Relay call transcript screen'},
@@ -45,10 +51,12 @@ function document(title, description, route, body) {
   const canonical = `${config.origin}${route === '/' ? '/' : route.replace(/\/$/, '')}`;
   return `<!doctype html>
 <html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(title)}</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#f3efe6">${production ? '' : '<meta name="robots" content="noindex, nofollow">'}<link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:site_name" content="Relay"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${config.origin}${url('/assets/social-preview.png')}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Relay. Your plans. Your time. Relay’s call."><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="${url('/assets/favicon.png')}"><link rel="apple-touch-icon" href="${url('/assets/apple-touch-icon.png')}"><link rel="preload" href="${url('/assets/fonts/newsreader-medium.ttf')}" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="${url('/style.css')}"></head>
-<body><a class="skip" href="#main">Skip to content</a>${!production ? '<div class="preview-notice">Design preview · Final app screenshots and App Store availability pending</div>' : ''}<header class="site-header wrap">${brand}<nav aria-label="Main"><a class="desktop-nav" href="${url('/#how-it-works')}">How it works</a><a href="${url('/support/')}">Support</a><a class="nav-link" href="${url('/privacy/')}">Privacy</a></nav></header>${body}${footer}${route === "/" ? `<script src="${url("/assets/journey.js")}" defer></script>` : ""}</body></html>\n`;
+<body><a class="skip" href="#main">Skip to content</a>${!production ? '<div class="preview-notice">Design preview · App Store availability pending</div>' : ''}<header class="site-header wrap">${brand}<nav aria-label="Main"><a class="desktop-nav" href="${url('/#how-it-works')}">How it works</a><a href="${url('/support/')}">Support</a><a class="nav-link" href="${url('/privacy/')}">Privacy</a></nav></header>${body}${footer}${route === "/" ? `<script src="${url("/assets/journey.js")}" defer></script>` : ""}</body></html>\n`;
 }
 let home = await read('src/home.html');
 home = home.replaceAll('{{BASE}}', base).replaceAll('{{DOWNLOAD}}', download);
+const demoMarkup = `<figure class="demo-media"><div class="demo-video-frame"><video controls playsinline preload="metadata" poster="${url('/' + demo.posterPath)}" aria-label="Relay scripted local demonstration video" aria-describedby="demo-disclosure"><source src="${url('/' + demo.videoPath)}" type="video/mp4">Your browser does not support this video. <a href="${url('/' + demo.videoPath)}">Download the Relay demonstration video</a>.</video></div><figcaption id="demo-disclosure"><strong>Scripted local demonstration.</strong> This silent walkthrough uses a fictional Casa Maré reservation. It shows a simulated outcome; no real call or reservation was made.</figcaption></figure>`;
+home = home.replaceAll('{{DEMO}}', demoMarkup);
 for (const [key, slot] of Object.entries(slots)) {
   const media = config.screenshots[key];
   const markup = media ? `<img src="${url('/' + media.path)}" alt="${esc(media.alt)}" width="${media.width}" height="${media.height}" ${key === 'call' ? 'loading="lazy"' : 'fetchpriority="high"'}>` : `<div class="media-slot" data-media-slot="${key}"><span class="slot-index">${slot.number}</span><span class="slot-rule" aria-hidden="true"></span><span class="slot-title">${slot.title}</span><span class="slot-status">App screenshot<br>awaiting final capture</span></div>`;

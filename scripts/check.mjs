@@ -15,12 +15,18 @@ for (const file of files){
   assert.match(html,/name="description"/);
   assert.match(html,/rel="canonical"/);
   assert.doesNotMatch(html,/<iframe\b|{{|javascript:|href="#"/);
-  if(file==='index.html') assert.match(html, /<script src="\/assets\/journey.js" defer><\/script>/);
+  if(file==='index.html') {
+    assert.match(html, /<script src="\/assets\/journey.js" defer><\/script>/);
+    assert.match(html, /<video controls playsinline preload="metadata" poster="\/assets\/media\/relay-scripted-demo-poster\.png" aria-label="Relay scripted local demonstration video" aria-describedby="demo-disclosure">/);
+    assert.match(html, /<source src="\/assets\/media\/relay-scripted-demo-18s\.mp4" type="video\/mp4">/);
+    assert.match(html, /<strong>Scripted local demonstration\.<\/strong>/);
+    assert.doesNotMatch(html, /<video[^>]+autoplay/);
+  }
   else assert.doesNotMatch(html, /<script\b/);
   for(const img of html.matchAll(/<img\b[^>]+>/g)) assert.match(img[0],/alt="[^"]*"/);
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
   assert.equal(ids.length,new Set(ids).size,`${file}: unique IDs`);
-  for (const [,ref] of html.matchAll(/(?:href|src)="([^"]+)"/g)){
+  for (const [,ref] of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)){
     if(ref.startsWith('#')) {assert.ok(ids.includes(ref.slice(1)),`${file}: ${ref}`);continue;}
     if(!ref.startsWith('/')) continue;
     const [p,fragment]=ref.split('#');

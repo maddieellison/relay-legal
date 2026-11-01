@@ -1,8 +1,8 @@
 # Relay launch website
 
 Dependency-free static website for `callwithrelay.com` in the existing
-`maddieellison/relay-legal` repository. **Preview only until final screenshots,
-the public App Store URL, and founder production approval are supplied.**
+`maddieellison/relay-legal` repository. **Preview only until the public App Store
+URL and founder production approval are supplied.**
 
 ## Local preview
 
@@ -20,12 +20,14 @@ and `noindex`. Deploy only `dist/`, never the source directory.
 
 ## Source
 
-- `src/home.html`: centred hero and three-chapter scrolling phone story.
+- `src/home.html`: centred hero, scripted-demo video and three-chapter scrolling
+  phone story.
 - `assets/journey.js`: 2.8 KB native-scroll enhancement; no dependencies.
 - `scripts/journey-test.mjs`: scroll, keyboard and reduced-motion behaviour tests.
 - `src/legal/{privacy,terms,support}.html`: byte-for-byte published source documents.
 - `style.css`: responsive design, local fonts, focus and reduced-motion styles.
-- `site.config.json`: screenshot assets, App Store link and canonical domain.
+- `site.config.json`: verified demo/screenshot assets, App Store link and canonical
+  domain.
 - `assets/`: real Relay icon (resized only), derived icons, social preview,
   Newsreader/Hanken Grotesk fonts and licenses.
 - `scripts/build.mjs`: generates home, clean legal/support paths, legacy `.html`
@@ -36,12 +38,28 @@ and `noindex`. Deploy only `dist/`, never the source directory.
 - `.github/workflows/publish.yml`: manual-only deployment to existing GitHub Pages.
 - `review/`: audit and deferred app patch; screenshot evidence is local and ignored.
 
-## Supply launch assets
+## Demo media
 
-Three genuine, approved screenshots are required: request/plan, live conversation,
-and outcome. Use a controlled example without personal information. Store supplied
-files unchanged in `assets/screenshots/`; do not recreate their UI. Populate
-`request`, `call` and `outcome` in `site.config.json`, each in this form:
+The homepage uses only supplied, verified local-demo assets. The 18.07-second,
+silent H.264 reel appears immediately after the hero with native controls,
+`preload="metadata"`, a poster and a visible simulation disclosure. It never
+autoplays. `site.config.json` records the approved asset paths and descriptions.
+
+| Website asset | Source asset | Placement |
+| --- | --- | --- |
+| `assets/media/relay-scripted-demo-18s.mp4` | `relay-launch-assets/exports/website-screenshot-reel-18s.mp4` | Primary walkthrough |
+| `assets/media/relay-scripted-demo-poster.png` | `originals/screenshots/03-plan-portuguese.png` | Video poster |
+| `assets/screenshots/request.png` | `originals/screenshots/02-entered-request.png` | Request chapter |
+| `assets/screenshots/call.png` | `originals/screenshots/05-live-transcript.png` | Call chapter |
+| `assets/screenshots/outcome.png` | `originals/screenshots/06-completed-summary.png` | Outcome chapter |
+
+The supplied package has no separate formal asset-manifest file or London-plumber
+recording. Its `README.md` and `scenario.json` provide the verified provenance:
+the fictional Casa Maré result is a local scripted simulation, and no real call
+or reservation occurred. Do not replace these files with unverified media.
+
+To change an approved screen, retain its source pixels and populate its entry in
+`site.config.json` in this form:
 
 ```json
 {
@@ -76,7 +94,7 @@ Existing hosting is GitHub Pages, `main` branch root, legacy build. This branch
 builds `dist/`. **Do not merge while Pages is still configured to deploy the
 repository root:** source pages have moved, so that would publish the wrong files.
 
-1. Integrate final screenshots and live download URL, review desktop/mobile and run
+1. Add the live download URL, review desktop/mobile and run
    `npm run build:production`, `npm run lint`, `npm test`.
 2. Obtain explicit founder authorisation for production and DNS changes.
 3. In `relay-legal` Settings → Pages, change Source to **GitHub Actions** before

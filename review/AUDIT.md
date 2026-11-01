@@ -3,9 +3,10 @@
 ## Status
 
 Built a deployable local preview on isolated branch `design/relay-launch-website`
-in the existing legal-site repository. Final screenshots, public download URL and
-founder production approval remain outstanding. No live publishing/DNS changes,
-app modifications, or phone calls were made.
+in the existing legal-site repository. A verified local scripted-demo video and
+three corresponding screenshots are integrated; public download URL and founder
+production approval remain outstanding. No live publishing/DNS changes, app
+modifications, or phone calls were made.
 
 ## Existing setup
 
@@ -42,8 +43,13 @@ its design tokens match. Font files came from installed Expo font packages.
 - `home.tsx`, `setup.tsx`, `review.tsx`, `call/[id].tsx`, `summary/[id].tsx` verify
   request/quote examples, plan review, live transcript and outcome/transcript.
 - Published policies verify AI/recording disclosure, limits and support details.
-- No approved screenshots were supplied or found. Three explicit slots await
-  them. No fictional interface, reviews, statistics or guaranteed outcomes.
+- The supplied local-demo package was inspected at `relay-launch-assets/`.
+  Its `README.md` and `scenario.json` verify that Casa Maré is fictional, the
+  Portuguese call is scripted and local, and no real call or reservation happened.
+  No separate formal asset-manifest file, poster file or London-plumber recording
+  was present. The approved 18.07-second silent screenshot reel and native screens
+  are used unchanged; a visible simulation disclosure accompanies the video.
+- No fictional interface, reviews, statistics or guaranteed outcomes were added.
 
 ## Exact source paths changed
 
@@ -62,6 +68,10 @@ Relative to `worktrees/relay-website-preview/`:
   `assets/fonts/hanken-regular.ttf`, `assets/fonts/hanken-semibold.ttf`,
   `assets/fonts/Newsreader-LICENSE.txt`, `assets/fonts/HankenGrotesk-LICENSE.txt`.
 - Added `review/AUDIT.md`, `review/app-legal-url.patch`.
+- Added `assets/media/relay-scripted-demo-18s.mp4`,
+  `assets/media/relay-scripted-demo-poster.png`, and
+  `assets/screenshots/{request,call,outcome}.png` from the verified local-demo
+  package.
 - Generated ignored `dist/`, `review/*.png`, `review/responsive.json`.
 
 Untouched: all active and older app files, specifically `mobile/src/lib/legal.ts`,
@@ -72,7 +82,7 @@ payment/RevenueCat/StoreKit, `company-os/`, workspace `.vercel/`, live Pages and
 
 - Build, lint and tests pass. Lint checks Node syntax; the original static legal
   repository had no framework, lint suite or dependencies.
-- Eight pages, 137 internal link/asset references, local fonts, icons, metadata,
+- Eight pages, 143 internal link/asset references, local fonts, icons, metadata,
   canonical URLs, old routes and 404 verified.
 - All three source document SHA-256 hashes match published Git revision.
   Complete rendered text matches source snapshots; only presentation/links change.
@@ -88,10 +98,16 @@ payment/RevenueCat/StoreKit, `company-os/`, workspace `.vercel/`, live Pages and
   green/tint 6.57:1, light/deep 8.99:1, caption/deep 8.18:1.
 - No browser errors or warnings; no broken loaded images. Below-fold imagery
   lazy loads; explicit dimensions prevent image-induced layout shifts.
-- Complete preview approximately 562 KB before compression/final screenshots.
-  One local 2.8 KB homepage scroll script; no third-party scripts/fonts, analytics or cookies. Legal/support pages load no JavaScript.
-- Production build correctly refuses missing launch inputs before changing the
-  existing preview. Workflow is manual-only and cannot publish this incomplete state.
+- Complete preview approximately 2.25 MB before transport compression, including
+  a 518 KB video, 378 KB poster and 788 KB of screenshots. One local 2.8 KB
+  homepage scroll script; no third-party scripts/fonts, analytics or cookies.
+  Legal/support pages load no JavaScript.
+- Video was checked at desktop and mobile widths: it is 18.066667 seconds, loads
+  locally with controls, poster and metadata preload, never autoplays, has no
+  error and does not cause horizontal overflow. The disclosure is readable in the
+  accessibility tree. Production build correctly refuses missing launch inputs
+  before changing the existing preview. Workflow is manual-only and cannot
+  publish this incomplete state.
 
 Limitations: Chromium at iPhone-sized viewports, not physical iPhone/Safari;
 no full screen-reader/axe audit or Lighthouse score; no production performance
@@ -100,12 +116,11 @@ saved fields and support mailbox delivery were not inspected.
 
 ## Founder actions remaining
 
-1. Supply and approve current request/plan, conversation and outcome screenshots.
-2. Confirm a publicly accessible App Store link when available.
-3. Confirm the published support mailbox receives mail and is monitored.
-4. Review with final assets and authorise production/DNS cutover; exact existing
+1. Confirm a publicly accessible App Store link when available.
+2. Confirm the published support mailbox receives mail and is monitored.
+3. Review the supplied media and authorise production/DNS cutover; exact existing
    GitHub Pages deployment steps are in `README.md`.
-5. After HTTPS verification, approve the prepared app patch and update App Store
+4. After HTTPS verification, approve the prepared app patch and update App Store
    Connect to `https://callwithrelay.com/privacy`,
    `https://callwithrelay.com/support` and Marketing URL `https://callwithrelay.com`.
    Terms will be at `https://callwithrelay.com/terms`.
