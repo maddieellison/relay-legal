@@ -16,7 +16,7 @@ const missing = [];
 if (!config.appStoreUrl) missing.push('App Store link');
 if (config.appStoreUrl && !/^https:\/\/apps\.apple\.com\/(?:[a-z]{2}\/)?app\/(?:[^/]+\/)?id6804118976(?:\?.*)?$/.test(config.appStoreUrl)) throw new Error('App Store URL must match Relay’s app ID 6804118976');
 const demo = config.demo;
-if (!demo || !demo.approved || !/^assets\/media\/[a-zA-Z0-9_-]+\.mp4$/.test(demo.videoPath) || !/^assets\/media\/[a-zA-Z0-9_-]+\.(png|webp|jpe?g)$/.test(demo.posterPath) || !Number.isFinite(demo.durationSeconds) || demo.durationSeconds <= 0 || !demo.description) {
+if (!demo || !demo.approved || !/^assets\/media\/[a-zA-Z0-9_-]+\.(mp4|mov)$/.test(demo.videoPath) || !/^assets\/media\/[a-zA-Z0-9_-]+\.(png|webp|jpe?g)$/.test(demo.posterPath) || !Number.isFinite(demo.durationSeconds) || demo.durationSeconds <= 0 || !demo.description) {
   throw new Error('Invalid or unapproved demo media');
 }
 await stat(path.join(root, demo.videoPath));
@@ -58,7 +58,8 @@ function document(title, description, route, body) {
 }
 let home = await read('src/home.html');
 home = home.replaceAll('{{BASE}}', base).replaceAll('{{DOWNLOAD}}', download);
-const demoMarkup = `<figure class="demo-media"><div class="demo-video-frame"><video controls playsinline preload="metadata" poster="${url('/' + demo.posterPath)}" aria-label="Relay scripted local demonstration video" aria-describedby="demo-disclosure"><source src="${url('/' + demo.videoPath)}" type="video/mp4">Your browser does not support this video. <a href="${url('/' + demo.videoPath)}">Download the Relay demonstration video</a>.</video></div><figcaption id="demo-disclosure"><strong>Scripted local demonstration.</strong> This silent walkthrough uses a fictional Casa Maré reservation. It shows a simulated outcome; no real call or reservation was made.</figcaption></figure>`;
+const videoType = demo.videoPath.endsWith('.mov') ? 'video/quicktime' : 'video/mp4';
+const demoMarkup = `<figure class="demo-media"><div class="demo-video-frame"><video controls playsinline preload="metadata" poster="${url('/' + demo.posterPath)}" aria-label="Relay app walkthrough"><source src="${url('/' + demo.videoPath)}" type="${videoType}">Your browser does not support this video. <a href="${url('/' + demo.videoPath)}">Download the Relay app walkthrough</a>.</video></div></figure>`;
 home = home.replaceAll('{{DEMO}}', demoMarkup);
 for (const [key, slot] of Object.entries(slots)) {
   const media = config.screenshots[key];
