@@ -9,9 +9,11 @@ const production = process.argv.includes('--production');
 const base = config.basePath.replace(/\/$/, '');
 if (base && !/^\/[a-z0-9/-]+$/i.test(base)) throw new Error('Invalid basePath');
 if (config.origin !== 'https://callwithrelay.com') throw new Error('Unexpected production origin');
+if (!['review','launch'].includes(config.siteMode)) throw new Error('siteMode must be review or launch');
+if (!['submission','live'].includes(config.appStoreStatus)) throw new Error('appStoreStatus must be submission or live');
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const missing = [];
-if (!config.appStoreUrl || !config.appStoreVerifiedOn) missing.push('verified live App Store link');
+if (!config.appStoreUrl) missing.push('App Store link');
 if (config.appStoreUrl && !/^https:\/\/apps\.apple\.com\/(?:[a-z]{2}\/)?app\/(?:[^/]+\/)?id6804118976(?:\?.*)?$/.test(config.appStoreUrl)) throw new Error('App Store URL must match Relay’s app ID 6804118976');
 const demo = config.demo;
 if (!demo || !demo.approved || !/^assets\/media\/[a-zA-Z0-9_-]+\.mp4$/.test(demo.videoPath) || !/^assets\/media\/[a-zA-Z0-9_-]+\.(png|webp|jpe?g)$/.test(demo.posterPath) || !Number.isFinite(demo.durationSeconds) || demo.durationSeconds <= 0 || !demo.description) {
@@ -31,8 +33,9 @@ for (const key of Object.keys(slots)) {
   await stat(path.join(root, media.path));
 }
 // Fail BEFORE replacing the last usable preview.
-if (production && missing.length) throw new Error(`Launch blocked: supply ${missing.join(', ')}. Preview remains available with npm run build.`);
-if (production) {
+if (production && missing.length) throw new Error(`Launch blocked: supply ${missing.join(', ')}.`);
+if (production && config.appStoreStatus === 'live') {
+  if (!config.appStoreVerifiedOn) throw new Error('Reverify the live App Store listing within 7 days of release');
   const verifiedAge = Date.now() - Date.parse(config.appStoreVerifiedOn);
   if (!Number.isFinite(verifiedAge) || verifiedAge < 0 || verifiedAge > 7*86400000) throw new Error('Reverify the App Store listing within 7 days of release');
   const response = await fetch(config.appStoreUrl, {signal: AbortSignal.timeout(15000)});
@@ -46,12 +49,12 @@ await cp(path.join(root, 'style.css'), path.join(out, 'style.css'));
 const url = p => `${base}${p}`;
 const brand = `<a class="brand" href="${url('/')}" aria-label="Relay home"><img src="${url('/assets/app-icon.png')}" width="38" height="38" alt=""><span class="wordmark">Relay</span></a>`;
 const footer = `<footer class="site-footer wrap"><div class="footer-top">${brand}<nav aria-label="Footer"><a href="${url('/privacy/')}">Privacy Policy</a><a href="${url('/terms/')}">Terms of Service</a><a href="${url('/support/')}">Support</a></nav></div><div class="footer-bottom"><span>© 2026 MES Genesis Co Ltd. All rights reserved.</span><span>Your AI calling assistant for iPhone.</span></div></footer>`;
-const download = config.appStoreUrl && config.appStoreVerifiedOn ? `<a class="button" href="${esc(config.appStoreUrl)}">Download on the App Store <span aria-hidden="true">↗</span></a>` : '<span class="availability">Coming to iPhone</span>';
+const download = `<a class="button" href="${esc(config.appStoreUrl)}">Download on the App Store <span aria-hidden="true">↗</span></a>`;
 function document(title, description, route, body) {
   const canonical = `${config.origin}${route === '/' ? '/' : route.replace(/\/$/, '')}`;
   return `<!doctype html>
-<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(title)}</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#f3efe6">${production ? '' : '<meta name="robots" content="noindex, nofollow">'}<link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:site_name" content="Relay"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${config.origin}${url('/assets/social-preview.png')}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Relay. Your plans. Your time. Relay’s call."><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="${url('/assets/favicon.png')}"><link rel="apple-touch-icon" href="${url('/assets/apple-touch-icon.png')}"><link rel="preload" href="${url('/assets/fonts/newsreader-medium.ttf')}" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="${url('/style.css')}"></head>
-<body><a class="skip" href="#main">Skip to content</a>${!production ? '<div class="preview-notice">Design preview · App Store availability pending</div>' : ''}<header class="site-header wrap">${brand}<nav aria-label="Main"><a class="desktop-nav" href="${url('/#how-it-works')}">How it works</a><a href="${url('/support/')}">Support</a><a class="nav-link" href="${url('/privacy/')}">Privacy</a></nav></header>${body}${footer}${route === "/" ? `<script src="${url("/assets/journey.js")}" defer></script>` : ""}</body></html>\n`;
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(title)}</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#f3efe6">${config.siteMode === 'review' ? '<meta name="robots" content="noindex, nofollow">' : ''}<link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:site_name" content="Relay"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${config.origin}${url('/assets/social-preview.png')}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Relay. Your plans. Your time. Relay’s call."><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="${url('/assets/favicon.png')}"><link rel="apple-touch-icon" href="${url('/assets/apple-touch-icon.png')}"><link rel="preload" href="${url('/assets/fonts/newsreader-medium.ttf')}" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="${url('/style.css')}"></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="site-header wrap">${brand}<nav aria-label="Main"><a class="desktop-nav" href="${url('/#how-it-works')}">How it works</a><a href="${url('/support/')}">Support</a><a class="nav-link" href="${url('/privacy/')}">Privacy</a></nav></header>${body}${footer}${route === "/" ? `<script src="${url("/assets/journey.js")}" defer></script>` : ""}</body></html>\n`;
 }
 let home = await read('src/home.html');
 home = home.replaceAll('{{BASE}}', base).replaceAll('{{DOWNLOAD}}', download);
@@ -84,8 +87,8 @@ for (const key of ['privacy','terms','support']) {
   await writeFile(path.join(out,`${key}.html`),html); // Preserve all existing in-app URLs.
 }
 await writeFile(path.join(out,'404.html'),document('Page not found — Relay','Return to Relay or get support.','/404',`<main id="main" tabindex="-1" class="not-found wrap"><p class="eyebrow">404 · A wrong number</p><h1>This page isn’t here.</h1><p>Head back to Relay, or get in touch if you need a hand.</p><a class="button" href="${url('/')}">Back to Relay</a></main>`));
-await writeFile(path.join(out,'robots.txt'), production ? `User-agent: *\nAllow: /\nSitemap: ${config.origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
+await writeFile(path.join(out,'robots.txt'), config.siteMode === 'launch' ? `User-agent: *\nAllow: /\nSitemap: ${config.origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
 await writeFile(path.join(out,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/','/privacy','/terms','/support'].map(p=>`<url><loc>${config.origin}${p}</loc></url>`).join('')}</urlset>`);
 await writeFile(path.join(out,'.nojekyll'),'');
 if (production) await writeFile(path.join(out,'CNAME'),'callwithrelay.com\n');
-console.log(`Built ${production ? 'production' : 'preview'} site in dist/. ${production ? '' : `Launch pending: ${missing.join(', ')}.`}`);
+console.log(`Built ${production ? 'production' : config.siteMode} site in dist/. ${config.appStoreStatus === 'submission' ? 'App Store listing is awaiting publication.' : ''}`);

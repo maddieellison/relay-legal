@@ -1,7 +1,9 @@
 {
   "origin": "https://callwithrelay.com",
   "basePath": "",
-  "appStoreUrl": null,
+  "siteMode": "launch",
+  "appStoreUrl": "https://apps.apple.com/gb/app/relay/id6804118976",
+  "appStoreStatus": "submission",
   "appStoreVerifiedOn": null,
   "demo": {
     "videoPath": "assets/media/relay-scripted-demo-18s.mp4",

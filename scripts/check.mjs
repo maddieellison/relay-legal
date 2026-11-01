@@ -14,6 +14,8 @@ for (const file of files){
   assert.match(html,/<main id="main"/);
   assert.match(html,/name="description"/);
   assert.match(html,/rel="canonical"/);
+  assert.doesNotMatch(html,/Design preview|availability pending|Coming to iPhone/);
+  assert.doesNotMatch(html,/noindex/);
   assert.doesNotMatch(html,/<iframe\b|{{|javascript:|href="#"/);
   if(file==='index.html') {
     assert.match(html, /<script src="\/assets\/journey.js" defer><\/script>/);
@@ -21,6 +23,7 @@ for (const file of files){
     assert.match(html, /<source src="\/assets\/media\/relay-scripted-demo-18s\.mp4" type="video\/mp4">/);
     assert.match(html, /<strong>Scripted local demonstration\.<\/strong>/);
     assert.doesNotMatch(html, /<video[^>]+autoplay/);
+    assert.match(html, /href="https:\/\/apps\.apple\.com\/gb\/app\/relay\/id6804118976"/);
   }
   else assert.doesNotMatch(html, /<script\b/);
   for(const img of html.matchAll(/<img\b[^>]+>/g)) assert.match(img[0],/alt="[^"]*"/);

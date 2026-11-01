@@ -1,8 +1,9 @@
 # Relay launch website
 
 Dependency-free static website for `callwithrelay.com` in the existing
-`maddieellison/relay-legal` repository. **Preview only until the public App Store
-URL and founder production approval are supplied.**
+`maddieellison/relay-legal` repository. It is in **launch mode**: public metadata,
+indexing and App Store CTAs are enabled for today's App Review submission. Production
+publishing and DNS changes still require founder approval.
 
 ## Local preview
 
@@ -15,8 +16,8 @@ npm test
 npm run dev
 ```
 
-Open http://127.0.0.1:4387 (this computer only). Preview includes a review notice
-and `noindex`. Deploy only `dist/`, never the source directory.
+Open http://127.0.0.1:4387 (this computer only). Deploy only `dist/`, never the
+source directory.
 
 ## Source
 
@@ -74,10 +75,13 @@ To change an approved screen, retain its source pixels and populate its entry in
 Use actual dimensions and descriptive alt text. Screens retain their aspect ratio;
 no content overlays are added. Recheck composition with the supplied assets.
 
-Set `appStoreUrl` when Relay app ID `6804118976` is publicly available; set
-`appStoreVerifiedOn` to the ISO timestamp of verification. Until then there is an
-availability message, not a dead download link. Production requires verification
-within seven days and fetches the App Store URL again to confirm a successful response.
+`site.config.json` intentionally separates the site state from Apple’s publication
+state. `siteMode: "launch"` removes all preview language and permits indexing;
+`appStoreStatus: "submission"` enables the known App Store route for App Review
+without claiming it already resolves. After Apple publishes the listing, set
+`appStoreStatus` to `"live"`, set `appStoreVerifiedOn` to the verification time,
+and run `npm run build:production`. The production build then fetches the App Store
+URL and requires it to respond successfully within seven days.
 
 ## Approved legal copy
 
@@ -94,8 +98,8 @@ Existing hosting is GitHub Pages, `main` branch root, legacy build. This branch
 builds `dist/`. **Do not merge while Pages is still configured to deploy the
 repository root:** source pages have moved, so that would publish the wrong files.
 
-1. Add the live download URL, review desktop/mobile and run
-   `npm run build:production`, `npm run lint`, `npm test`.
+1. Review desktop/mobile and run `npm run build:production`, `npm run lint`,
+   `npm test`.
 2. Obtain explicit founder authorisation for production and DNS changes.
 3. In `relay-legal` Settings → Pages, change Source to **GitHub Actions** before
    merging this branch. This reuses existing hosting.
@@ -105,11 +109,13 @@ repository root:** source pages have moved, so that would publish the wrong file
    `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`.
    If using `www`, point its CNAME to `maddieellison.github.io`. Preserve email
    MX/TXT and other unrelated DNS records.
-6. Manually run **Publish Relay website (manual)** on `main`. Incomplete assets
-   block the build. Enable Enforce HTTPS once the certificate is available.
+6. Manually run **Publish Relay website (manual)** on `main`. Enable Enforce HTTPS
+   once the certificate is available.
 7. Verify HTTPS at `/`, `/privacy`, `/support`, `/terms`, slash variants and legacy
    `.html` paths. Check old GitHub URL redirects, assets, social preview and download.
-8. Only after successful public verification and approval, apply
+8. Once the App Store route resolves publicly, change `appStoreStatus` to `live`
+   and add a fresh `appStoreVerifiedOn` timestamp. Then re-run the production build.
+9. Only after successful public verification and approval, apply
    `review/app-legal-url.patch` in the active app checkout and release the app via
    its normal process. Update the App Store Connect fields below.
 

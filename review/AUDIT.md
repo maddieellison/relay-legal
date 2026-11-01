@@ -2,11 +2,11 @@
 
 ## Status
 
-Built a deployable local preview on isolated branch `design/relay-launch-website`
+Built a deployable launch-mode site on isolated branch `design/relay-launch-website`
 in the existing legal-site repository. A verified local scripted-demo video and
-three corresponding screenshots are integrated; public download URL and founder
-production approval remain outstanding. No live publishing/DNS changes, app
-modifications, or phone calls were made.
+three corresponding screenshots are integrated; public download-route verification
+and founder production approval remain outstanding. No live publishing/DNS changes,
+app modifications, or phone calls were made.
 
 ## Existing setup
 
@@ -21,7 +21,7 @@ modifications, or phone calls were made.
 | www | No answer in DNS check |
 | Email | MX `0 callwithrelay-com.mail.protection.outlook.com.` |
 | Support | `support@callwithrelay.com` matches published documents and app source; delivery/monitoring untested |
-| App Store | App config ID `6804118976`; `https://apps.apple.com/gb/app/id6804118976` returned 404 |
+| App Store | App config ID `6804118976`; configured route is `https://apps.apple.com/gb/app/relay/id6804118976`; it returned 404 on 1 November, so `appStoreStatus` remains `submission` |
 | Vercel | Workspace project is `biz-os`; deliberately not reused |
 
 ## Design and claims evidence
@@ -105,9 +105,13 @@ payment/RevenueCat/StoreKit, `company-os/`, workspace `.vercel/`, live Pages and
 - Video was checked at desktop and mobile widths: it is 18.066667 seconds, loads
   locally with controls, poster and metadata preload, never autoplays, has no
   error and does not cause horizontal overflow. The disclosure is readable in the
-  accessibility tree. Production build correctly refuses missing launch inputs
-  before changing the existing preview. Workflow is manual-only and cannot
-  publish this incomplete state.
+  accessibility tree. The build rejects missing or malformed app/media inputs;
+  live App Store mode additionally rejects an unverified or non-resolving route.
+  The workflow remains manual-only.
+- Launch-mode verification: removes preview/noindex/availability-pending UI and
+  renders the configured App Store CTAs. `npm run build:production` passes in
+  submission mode. Once Apple’s route responds, production switches to live mode
+  and validates the route before generating a release.
 
 Limitations: Chromium at iPhone-sized viewports, not physical iPhone/Safari;
 no full screen-reader/axe audit or Lighthouse score; no production performance
@@ -116,7 +120,8 @@ saved fields and support mailbox delivery were not inspected.
 
 ## Founder actions remaining
 
-1. Confirm a publicly accessible App Store link when available.
+1. When Apple publishes the listing, set `appStoreStatus` to `live` and add a
+   fresh `appStoreVerifiedOn` timestamp in `site.config.json`.
 2. Confirm the published support mailbox receives mail and is monitored.
 3. Review the supplied media and authorise production/DNS cutover; exact existing
    GitHub Pages deployment steps are in `README.md`.
