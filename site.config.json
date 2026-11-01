@@ -6,11 +6,11 @@
   "appStoreStatus": "submission",
   "appStoreVerifiedOn": null,
   "demo": {
-    "videoPath": "assets/media/relay-scripted-demo-18s.mp4",
-    "posterPath": "assets/media/relay-scripted-demo-poster.png",
-    "durationSeconds": 18.07,
+    "videoPath": "assets/media/relay-call-walkthrough.mp4",
+    "posterPath": "assets/media/relay-call-walkthrough-poster.jpg",
+    "durationSeconds": 76.98,
     "approved": true,
-    "description": "Silent 18-second scripted local Relay demonstration showing a request, Portuguese call transcript and simulated outcome. No real call or reservation was made."
+    "description": "Silent Relay app walkthrough showing the request and call experience."
   },
   "screenshots": {
     "request": {
