@@ -779,13 +779,13 @@ html {
 .chapter-phone {
   width: 100%;
   aspect-ratio: 390 / 844;
-  padding: 7px;
+  padding: 2px;
   border: 1px solid #567466;
   border-radius: 40px;
   background: #21302b;
   box-shadow: 0 22px 42px -25px #1a3a3066, inset 0 0 0 2px #5b7367;
 }
-.chapter-phone img { width: 100%; height: 100%; object-fit: contain; border-radius: 33px; background: var(--surface); }
+.chapter-phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 37px; background: var(--surface); }
 .chapter-phone .media-slot {
   width: 100%; height: 100%; margin: 0; aspect-ratio: auto;
   border-radius: 32px; border: 0; padding: 20px; color: var(--green);
@@ -843,8 +843,8 @@ html {
   .journey-chapter { display: flex; flex-direction: column; gap: 24px; text-align: center; padding-block: 35px; }
   .chapter-copy h3 { font-size: 36px; letter-spacing: -1.1px; margin-top: 12px; }
   .chapter-copy > p:last-child { font-size: 14px; line-height: 1.5; max-width: 310px; margin: 13px auto 0; }
-  .chapter-phone { width: min(245px, 70vw); border-radius: 32px; padding: 6px; }
-  .chapter-phone img, .chapter-phone .media-slot { border-radius: 25px; }
+  .chapter-phone { width: min(245px, 70vw); border-radius: 32px; padding: 2px; }
+  .chapter-phone img, .chapter-phone .media-slot { border-radius: 29px; }
   .chapter-note { padding: 0; max-width: 300px; }
   .chapter-note .brand-glyph { display: none; }
   .chapter-note > p:not(.eyebrow) { font-size: 23px; }

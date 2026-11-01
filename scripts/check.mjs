@@ -22,8 +22,8 @@ for (const file of files){
     assert.match(html, /<video controls playsinline preload="metadata" poster="\/assets\/media\/relay-tokyo-taxi-poster\.png" aria-label="Relay walkthrough showing a Tokyo taxi request, Japanese conversation and returned journey details">/);
     assert.match(html, /<source src="\/assets\/media\/relay-tokyo-taxi\.mp4" type="video\/mp4">/);
     assert.doesNotMatch(html, /<figcaption|demo-disclosure|A Tokyo taxi request from Shibuya Station to Haneda Airport Terminal 3/);
-    for(const asset of ["tokyo-taxi-input.png","tokyo-taxi-call.png","tokyo-taxi-result.png"]) assert.match(html,new RegExp(`/assets/screenshots/${asset}`));
-    assert.match(html, /Haneda Airport Terminal 3 tomorrow at 07:30/);
+    for(const asset of ["brightwell-dental-input.png","brightwell-dental-call.png","brightwell-dental-result.png"]) assert.match(html,new RegExp(`/assets/screenshots/${asset}`));
+    assert.match(html, /Thursday at 10:30/);
     assert.match(html, /Add to calendar/);
     assert.doesNotMatch(html, /<video[^>]+autoplay/);
     assert.match(html, /href="https:\/\/apps\.apple\.com\/gb\/app\/relay\/id6804118976"/);
