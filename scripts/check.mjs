@@ -19,9 +19,12 @@ for (const file of files){
   assert.doesNotMatch(html,/<iframe\b|{{|javascript:|href="#"/);
   if(file==='index.html') {
     assert.match(html, /<script src="\/assets\/journey.js" defer><\/script>/);
-    assert.match(html, /<video controls playsinline preload="metadata" poster="\/assets\/media\/relay-scripted-demo-poster\.png" aria-label="Relay scripted local demonstration video" aria-describedby="demo-disclosure">/);
-    assert.match(html, /<source src="\/assets\/media\/relay-scripted-demo-18s\.mp4" type="video\/mp4">/);
-    assert.match(html, /<strong>Scripted local demonstration\.<\/strong>/);
+    assert.match(html, /<video controls playsinline preload="metadata" poster="\/assets\/media\/relay-tokyo-taxi-poster\.png" aria-label="Relay walkthrough showing a Tokyo taxi request, Japanese conversation and returned journey details">/);
+    assert.match(html, /<source src="\/assets\/media\/relay-tokyo-taxi\.mp4" type="video\/mp4">/);
+    assert.doesNotMatch(html, /<figcaption|demo-disclosure|A Tokyo taxi request from Shibuya Station to Haneda Airport Terminal 3/);
+    for(const asset of ["tokyo-taxi-input.png","tokyo-taxi-call.png","tokyo-taxi-result.png"]) assert.match(html,new RegExp(`/assets/screenshots/${asset}`));
+    assert.match(html, /Haneda Airport Terminal 3 tomorrow at 07:30/);
+    assert.match(html, /Add to calendar/);
     assert.doesNotMatch(html, /<video[^>]+autoplay/);
     assert.match(html, /href="https:\/\/apps\.apple\.com\/gb\/app\/relay\/id6804118976"/);
   }

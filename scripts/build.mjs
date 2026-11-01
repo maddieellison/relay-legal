@@ -58,7 +58,7 @@ function document(title, description, route, body) {
 }
 let home = await read('src/home.html');
 home = home.replaceAll('{{BASE}}', base).replaceAll('{{DOWNLOAD}}', download);
-const demoMarkup = `<figure class="demo-media"><div class="demo-video-frame"><video controls playsinline preload="metadata" poster="${url('/' + demo.posterPath)}" aria-label="Relay scripted local demonstration video" aria-describedby="demo-disclosure"><source src="${url('/' + demo.videoPath)}" type="video/mp4">Your browser does not support this video. <a href="${url('/' + demo.videoPath)}">Download the Relay demonstration video</a>.</video></div><figcaption id="demo-disclosure"><strong>Scripted local demonstration.</strong> This silent walkthrough uses a fictional Casa Maré reservation. It shows a simulated outcome; no real call or reservation was made.</figcaption></figure>`;
+const demoMarkup = `<figure class="demo-media"><div class="demo-video-frame"><video controls playsinline preload="metadata" poster="${url('/' + demo.posterPath)}" aria-label="Relay walkthrough showing a Tokyo taxi request, Japanese conversation and returned journey details"><source src="${url('/' + demo.videoPath)}" type="video/mp4">Your browser does not support this video. <a href="${url('/' + demo.videoPath)}">Watch the Tokyo taxi walkthrough</a>.</video></div></figure>`;
 home = home.replaceAll('{{DEMO}}', demoMarkup);
 for (const [key, slot] of Object.entries(slots)) {
   const media = config.screenshots[key];
