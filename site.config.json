@@ -6,30 +6,30 @@
   "appStoreStatus": "submission",
   "appStoreVerifiedOn": null,
   "demo": {
-    "videoPath": "assets/media/relay-scripted-demo-18s.mp4",
-    "posterPath": "assets/media/relay-scripted-demo-poster.png",
-    "durationSeconds": 18.07,
+    "videoPath": "assets/media/relay-tokyo-taxi.mp4",
+    "posterPath": "assets/media/relay-tokyo-taxi-poster.png",
+    "durationSeconds": 30,
     "approved": true,
-    "description": "Silent 18-second scripted local Relay demonstration showing a request, Portuguese call transcript and simulated outcome. No real call or reservation was made."
+    "description": "A Tokyo taxi request from Shibuya Station to Haneda Airport Terminal 3, followed by the Japanese-language conversation and journey details returned in Relay."
   },
   "screenshots": {
     "request": {
-      "path": "assets/screenshots/request.png",
-      "alt": "Relay request form for a fictional Casa Maré restaurant reservation in Lisbon",
+      "path": "assets/screenshots/tokyo-taxi-input.png",
+      "alt": "Completed Tokyo Sakura Taxi request form with Japan and Japanese selected, a Shibuya Station to Haneda Airport request, and Mia Chen as the caller.",
       "width": 1206,
       "height": 2622,
       "approved": true
     },
     "call": {
-      "path": "assets/screenshots/call.png",
-      "alt": "Relay call transcript for a scripted Portuguese demonstration",
+      "path": "assets/screenshots/tokyo-taxi-call.png",
+      "alt": "Relay live Japanese call transcript with Tokyo Sakura Taxi, including the AI assistant and call recording disclosure.",
       "width": 1206,
       "height": 2622,
       "approved": true
     },
     "outcome": {
-      "path": "assets/screenshots/outcome.png",
-      "alt": "Relay outcome screen stating that the Casa Maré booking is simulated and no real reservation was made",
+      "path": "assets/screenshots/tokyo-taxi-result.png",
+      "alt": "Tokyo Sakura Taxi result showing Shibuya Station to Haneda Airport Terminal 3 tomorrow at 07:30 for two passengers, an estimated fare of ¥12,000–¥15,000, and Add to calendar.",
       "width": 1206,
       "height": 2622,
       "approved": true
