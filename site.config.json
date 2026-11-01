@@ -1,0 +1,38 @@
+{
+  "origin": "https://callwithrelay.com",
+  "basePath": "",
+  "siteMode": "launch",
+  "appStoreUrl": "https://apps.apple.com/gb/app/relay/id6804118976",
+  "appStoreStatus": "submission",
+  "appStoreVerifiedOn": null,
+  "demo": {
+    "videoPath": "assets/media/relay-scripted-demo-18s.mp4",
+    "posterPath": "assets/media/relay-scripted-demo-poster.png",
+    "durationSeconds": 18.07,
+    "approved": true,
+    "description": "Silent 18-second scripted local Relay demonstration showing a request, Portuguese call transcript and simulated outcome. No real call or reservation was made."
+  },
+  "screenshots": {
+    "request": {
+      "path": "assets/screenshots/request.png",
+      "alt": "Relay request form for a fictional Casa Maré restaurant reservation in Lisbon",
+      "width": 1206,
+      "height": 2622,
+      "approved": true
+    },
+    "call": {
+      "path": "assets/screenshots/call.png",
+      "alt": "Relay call transcript for a scripted Portuguese demonstration",
+      "width": 1206,
+      "height": 2622,
+      "approved": true
+    },
+    "outcome": {
+      "path": "assets/screenshots/outcome.png",
+      "alt": "Relay outcome screen stating that the Casa Maré booking is simulated and no real reservation was made",
+      "width": 1206,
+      "height": 2622,
+      "approved": true
+    }
+  }
+}
