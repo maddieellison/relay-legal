@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>readFile(path.join(root,p),'utf8');
 const text=s=>s.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
-const productRoutes=['ai-phone-call-assistant','call-restaurants-abroad','restaurant-booking-japan','make-phone-calls-in-another-language','ai-appointment-calling','how-relay-works','supported-countries-languages'];
+const productRoutes=['ai-phone-call-assistant','call-restaurants-abroad','restaurant-booking-japan','make-phone-calls-in-another-language','ai-appointment-calling','how-relay-works','supported-countries-languages','relay-facts'];
 const files=['index.html',...productRoutes.map(route=>`${route}/index.html`),'privacy/index.html','terms/index.html','support/index.html','privacy.html','terms.html','support.html','404.html'];
 let links=0;
 for (const file of files){
@@ -27,7 +27,7 @@ for (const file of files){
     assert.match(html, /Thursday at 10:30/);
     assert.match(html, /Add to calendar/);
     assert.doesNotMatch(html, /<video[^>]+autoplay/);
-    assert.match(html, /href="https:\/\/apps\.apple\.com\/gb\/app\/relay\/id6804118976"/);
+    assert.match(html, /href="https:\/\/apps\.apple\.com\/app\/relay-call-assistant\/id6804118976"/);
     assert.match(html, /Relay is an AI phone call assistant for iPhone that calls real businesses on your behalf/);
     assert.match(html, /"@type":"SoftwareApplication"/);
     assert.match(html, /"operatingSystem":"iOS"/);
@@ -61,6 +61,13 @@ assert.match(robots,/User-agent: OAI-SearchBot\nAllow: \//);
 assert.match(robots,/User-agent: \*\nAllow: \//);
 const sitemap=await read('dist/sitemap.xml');
 for(const route of ['/',...productRoutes.map(route=>`/${route}`),'/privacy','/terms','/support']) assert.match(sitemap,new RegExp(`<loc>https://callwithrelay\\.com${route === '/' ? '/' : route}<\\/loc>`));
+const facts=await read('dist/relay-facts/index.html');
+for(const phrase of ['Last updated: 6 November 2026','What is Relay?','Does Relay identify itself as AI?','Does the business need Relay installed?','Is an outcome guaranteed?','https://apps.apple.com/app/relay-call-assistant/id6804118976']) assert.ok(facts.includes(phrase),`relay-facts: ${phrase}`);
+const llms=await read('dist/llms.txt');
+for(const route of ['/relay-facts','/how-relay-works','/supported-countries-languages','/ai-phone-call-assistant','/call-restaurants-abroad','/restaurant-booking-japan','/make-phone-calls-in-another-language','/ai-appointment-calling','/privacy','/terms','/support']) assert.ok(llms.includes(`https://callwithrelay.com${route}`),`llms.txt: ${route}`);
+assert.doesNotMatch(llms,/secret|private endpoint|prompt instruction/i);
+const config=JSON.parse(await read('site.config.json'));
+assert.equal(await read(`dist/${config.indexNowKey}.txt`),`${config.indexNowKey}\n`);
 for(const key of ['privacy','terms','support']){
   const original=(await read(`src/legal/${key}.html`)).match(/<main[^>]*>([\s\S]*?)<\/main>/)[1];
   const rendered=(await read(`dist/${key}/index.html`)).match(/<article class="legal-body">([\s\S]*?)<\/article>/)[1];

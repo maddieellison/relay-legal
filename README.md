@@ -35,6 +35,8 @@ source directory.
   paths, 404, metadata, sitemap and robots file.
 - `scripts/check.mjs`: checks content parity, routes, links and basic semantics.
 - `scripts/serve.mjs`: local server.
+- `src/llms.txt`: optional machine-readable directory of authoritative public pages.
+- `scripts/submit-indexnow.mjs`: dependency-free notification after an approved Pages deployment.
 - `.github/workflows/website.yml`: PR/manual checks and preview artifact.
 - `.github/workflows/publish.yml`: manual-only deployment to existing GitHub Pages.
 - `review/`: audit and deferred app patch; screenshot evidence is local and ignored.
@@ -136,6 +138,17 @@ Clean paths redirect to trailing-slash directories; both work. Legacy `.html`
 pages remain available. App Store Connect's saved fields were not inspected or
 changed. No app or backend code, live hosting, DNS, payments or Biz OS infrastructure
 was modified. There are no analytics, cookies, forms, web purchases or new services.
+
+## IndexNow
+
+The build publishes the public verification key from `site.config.json` at
+`/<key>.txt`. After the existing manually authorised GitHub Pages workflow has
+successfully deployed `dist/`, `scripts/submit-indexnow.mjs` verifies that key at
+`callwithrelay.com` and posts the canonical URLs from the generated sitemap, plus
+`/llms.txt`, to the global IndexNow endpoint. It uses Node's built-in `fetch`; no
+package, paid service or private secret is involved. Run `npm run build:production`
+followed by `node scripts/submit-indexnow.mjs --dry-run` to inspect the exact payload
+without making a submission. A normal local build never contacts IndexNow.
 
 ## Scroll design direction
 

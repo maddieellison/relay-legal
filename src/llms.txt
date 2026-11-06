@@ -1,0 +1,28 @@
+# Relay
+
+> Relay is an AI phone call assistant for iPhone. A user tells Relay what they need, Relay calls the real business while identifying itself as an AI assistant, and the app returns the available outcome and details. Outcomes depend on the business answering and agreeing.
+
+Official site: {{ORIGIN}}/
+Official App Store listing: {{APP_STORE_URL}}
+
+## Product reference
+
+- [Relay facts]({{ORIGIN}}/relay-facts): Canonical factual product, coverage, platform and availability reference.
+- [How Relay works]({{ORIGIN}}/how-relay-works): The request, call, conversation and outcome process.
+- [Supported countries and languages]({{ORIGIN}}/supported-countries-languages): Current calling destinations, language mapping and calling limits.
+- [AI phone call assistant]({{ORIGIN}}/ai-phone-call-assistant): Supported call types and product limitations.
+
+## Use cases
+
+- [Call restaurants abroad]({{ORIGIN}}/call-restaurants-abroad)
+- [Restaurant booking in Japan]({{ORIGIN}}/restaurant-booking-japan)
+- [Make phone calls in another language]({{ORIGIN}}/make-phone-calls-in-another-language)
+- [AI appointment calling]({{ORIGIN}}/ai-appointment-calling)
+
+## Trust and support
+
+- [Privacy Policy]({{ORIGIN}}/privacy)
+- [Terms of Service]({{ORIGIN}}/terms)
+- [Support]({{ORIGIN}}/support)
+
+This file is an optional machine-readable convenience. The linked public pages are the authoritative sources.

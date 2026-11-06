@@ -2,9 +2,10 @@
   "origin": "https://callwithrelay.com",
   "basePath": "",
   "siteMode": "launch",
-  "appStoreUrl": "https://apps.apple.com/gb/app/relay/id6804118976",
-  "appStoreStatus": "submission",
-  "appStoreVerifiedOn": null,
+  "indexNowKey": "8dacea4a51716ef16bdda68f8d023914",
+  "appStoreUrl": "https://apps.apple.com/app/relay-call-assistant/id6804118976",
+  "appStoreStatus": "live",
+  "appStoreVerifiedOn": "2026-11-06",
   "demo": {
     "videoPath": "assets/media/relay-tokyo-taxi.mp4",
     "posterPath": "assets/media/relay-tokyo-taxi-poster.png",

@@ -11,6 +11,7 @@ if (base && !/^\/[a-z0-9/-]+$/i.test(base)) throw new Error('Invalid basePath');
 if (config.origin !== 'https://callwithrelay.com') throw new Error('Unexpected production origin');
 if (!['review','launch'].includes(config.siteMode)) throw new Error('siteMode must be review or launch');
 if (!['submission','live'].includes(config.appStoreStatus)) throw new Error('appStoreStatus must be submission or live');
+if (!/^[A-Za-z0-9-]{8,128}$/.test(config.indexNowKey)) throw new Error('Invalid IndexNow key');
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const missing = [];
 if (!config.appStoreUrl) missing.push('App Store link');
@@ -48,7 +49,7 @@ await cp(path.join(root, 'assets'), path.join(out, 'assets'), {recursive:true});
 await cp(path.join(root, 'style.css'), path.join(out, 'style.css'));
 const url = p => `${base}${p}`;
 const brand = `<a class="brand" href="${url('/')}" aria-label="Relay home"><img src="${url('/assets/app-icon.png')}" width="38" height="38" alt=""><span class="wordmark">Relay</span></a>`;
-const footer = `<footer class="site-footer wrap"><div class="footer-top">${brand}<nav aria-label="Footer"><a href="${url('/privacy/')}">Privacy Policy</a><a href="${url('/terms/')}">Terms of Service</a><a href="${url('/support/')}">Support</a></nav></div><div class="footer-bottom"><span>© 2026 MES Genesis Co Ltd. All rights reserved.</span><span>Your AI calling assistant for iPhone.</span></div></footer>`;
+const footer = `<footer class="site-footer wrap"><div class="footer-top">${brand}<nav aria-label="Footer"><a href="${url('/relay-facts/')}">Relay facts</a><a href="${url('/privacy/')}">Privacy Policy</a><a href="${url('/terms/')}">Terms of Service</a><a href="${url('/support/')}">Support</a></nav></div><div class="footer-bottom"><span>© 2026 MES Genesis Co Ltd. All rights reserved.</span><span>Your AI calling assistant for iPhone.</span></div></footer>`;
 const download = `<a class="button" href="${esc(config.appStoreUrl)}">Download on the App Store <span aria-hidden="true">↗</span></a>`;
 const productPages = [
   {route:'/ai-phone-call-assistant', source:'ai-phone-call-assistant.html', title:'AI Phone Call Assistant for iPhone — Relay', description:'Relay is an AI phone call assistant that calls real businesses on your behalf for reservations, appointments, quotes and information.'},
@@ -58,6 +59,7 @@ const productPages = [
   {route:'/ai-appointment-calling', source:'ai-appointment-calling.html', title:'AI Calling for Appointments — Relay', description:'Ask Relay to call a business and request an appointment on your behalf, then review the available outcome in the iPhone app.'},
   {route:'/how-relay-works', source:'how-relay-works.html', title:'How Relay Works — AI Calls Made on Your Behalf', description:'Tell Relay what you need, review the plan, let its AI assistant call the business, and receive the available outcome and details.'},
   {route:'/supported-countries-languages', source:'supported-countries-languages.html', title:'Relay Supported Countries and Languages', description:'See the 18 calling destinations and seven spoken languages offered by the current Relay iPhone release candidate.'},
+  {route:'/relay-facts', source:'relay-facts.html', title:'Relay Facts — Product, Coverage and Availability', description:'Canonical factual information about Relay, the AI phone call assistant for iPhone, including how it works, supported coverage and official links.'},
 ];
 function document(title, description, route, body, structuredData) {
   const canonical = `${config.origin}${route === '/' ? '/' : route.replace(/\/$/, '')}`;
@@ -95,7 +97,7 @@ const softwareApplication = {
 await writeFile(path.join(out,'index.html'), document('Relay — AI Phone Call Assistant for iPhone', 'Relay is an AI phone call assistant that calls real businesses on your behalf for reservations, appointments, quotes and information, including supported-language calls abroad.', '/', home, softwareApplication));
 for (const page of productPages) {
   const source = await read(`src/pages/${page.source}`);
-  const body = source.replaceAll('{{BASE}}', base).replaceAll('{{DOWNLOAD}}', download);
+  const body = source.replaceAll('{{BASE}}', base).replaceAll('{{DOWNLOAD}}', download).replaceAll('{{APP_STORE_URL}}', esc(config.appStoreUrl)).replaceAll('{{ORIGIN}}', config.origin);
   await mkdir(path.join(out,page.route.slice(1)),{recursive:true});
   await writeFile(path.join(out,page.route.slice(1),'index.html'),document(page.title,page.description,page.route,body));
 }
@@ -123,6 +125,9 @@ await writeFile(path.join(out,'404.html'),document('Page not found — Relay','R
 await writeFile(path.join(out,'robots.txt'), config.siteMode === 'launch' ? `User-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: *\nAllow: /\n\nSitemap: ${config.origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
 const sitemapRoutes = ['/',...productPages.map(page=>page.route),'/privacy','/terms','/support'];
 await writeFile(path.join(out,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemapRoutes.map(p=>`<url><loc>${config.origin}${p}</loc></url>`).join('')}</urlset>`);
+const llms = (await read('src/llms.txt')).replaceAll('{{ORIGIN}}',config.origin).replaceAll('{{APP_STORE_URL}}',config.appStoreUrl);
+await writeFile(path.join(out,'llms.txt'),llms);
+await writeFile(path.join(out,`${config.indexNowKey}.txt`),`${config.indexNowKey}\n`);
 await writeFile(path.join(out,'.nojekyll'),'');
 if (production) await writeFile(path.join(out,'CNAME'),'callwithrelay.com\n');
 console.log(`Built ${production ? 'production' : config.siteMode} site in dist/. ${config.appStoreStatus === 'submission' ? 'App Store listing is awaiting publication.' : ''}`);
