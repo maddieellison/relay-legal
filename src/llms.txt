@@ -19,6 +19,15 @@ Official App Store listing: {{APP_STORE_URL}}
 - [Make phone calls in another language]({{ORIGIN}}/make-phone-calls-in-another-language)
 - [AI appointment calling]({{ORIGIN}}/ai-appointment-calling)
 
+## Verified call examples
+
+- [Real Relay call examples]({{ORIGIN}}/examples): Anonymised, founder-approved summaries of verified calls.
+- [Restaurant booking in Spanish]({{ORIGIN}}/examples/restaurant-booking-spanish)
+- [Restaurant booking in Japanese]({{ORIGIN}}/examples/restaurant-booking-japanese)
+- [Restaurant booking and cancellation]({{ORIGIN}}/examples/restaurant-booking-cancellation)
+- [Breakfast opening and service times]({{ORIGIN}}/examples/breakfast-opening-times)
+- [Event venue group-capacity enquiry]({{ORIGIN}}/examples/event-venue-enquiry)
+
 ## Trust and support
 
 - [Privacy Policy]({{ORIGIN}}/privacy)

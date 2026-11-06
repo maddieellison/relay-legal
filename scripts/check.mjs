@@ -5,9 +5,11 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>readFile(path.join(root,p),'utf8');
 const text=s=>s.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
-const productRoutes=['ai-phone-call-assistant','call-restaurants-abroad','restaurant-booking-japan','make-phone-calls-in-another-language','ai-appointment-calling','how-relay-works','supported-countries-languages','relay-facts'];
+const exampleRoutes=['examples','examples/restaurant-booking-spanish','examples/restaurant-booking-japanese','examples/restaurant-booking-cancellation','examples/breakfast-opening-times','examples/event-venue-enquiry'];
+const productRoutes=['ai-phone-call-assistant','call-restaurants-abroad','restaurant-booking-japan','make-phone-calls-in-another-language','ai-appointment-calling','how-relay-works','supported-countries-languages','relay-facts',...exampleRoutes];
 const files=['index.html',...productRoutes.map(route=>`${route}/index.html`),'privacy/index.html','terms/index.html','support/index.html','privacy.html','terms.html','support.html','404.html'];
 let links=0;
+const titles=[],descriptions=[],headings=[];
 for (const file of files){
   const html=await read(`dist/${file}`);
   assert.equal((html.match(/<h1\b/g)||[]).length,1,`${file}: one h1`);
@@ -15,6 +17,11 @@ for (const file of files){
   assert.match(html,/<main id="main"/);
   assert.match(html,/name="description"/);
   assert.match(html,/rel="canonical"/);
+  if(file==='index.html'||productRoutes.some(route=>file===`${route}/index.html`)) {
+    titles.push(html.match(/<title>([^<]+)<\/title>/)[1]);
+    descriptions.push(html.match(/<meta name="description" content="([^"]+)"/)[1]);
+    headings.push(text(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)[1]));
+  }
   assert.doesNotMatch(html,/Design preview|availability pending|Coming to iPhone/);
   assert.doesNotMatch(html,/noindex/);
   assert.doesNotMatch(html,/<iframe\b|{{|javascript:|href="#"/);
@@ -46,6 +53,9 @@ for (const file of files){
     links++;
   }
 }
+assert.equal(titles.length,new Set(titles).size,'unique page titles');
+assert.equal(descriptions.length,new Set(descriptions).size,'unique meta descriptions');
+assert.equal(headings.length,new Set(headings).size,'unique H1s');
 for (const route of productRoutes) {
   const html=await read(`dist/${route}/index.html`);
   assert.match(html,new RegExp(`<link rel="canonical" href="https://callwithrelay\\.com/${route}">`));
@@ -60,12 +70,28 @@ const robots=await read('dist/robots.txt');
 assert.match(robots,/User-agent: OAI-SearchBot\nAllow: \//);
 assert.match(robots,/User-agent: \*\nAllow: \//);
 const sitemap=await read('dist/sitemap.xml');
-for(const route of ['/',...productRoutes.map(route=>`/${route}`),'/privacy','/terms','/support']) assert.match(sitemap,new RegExp(`<loc>https://callwithrelay\\.com${route === '/' ? '/' : route}<\\/loc>`));
+for(const route of ['/',...productRoutes.map(route=>`/${route}`),'/privacy','/terms','/support']) {
+  const location=`<loc>https://callwithrelay.com${route === '/' ? '/' : route}</loc>`;
+  assert.equal(sitemap.split(location).length-1,1,`sitemap: ${route} exactly once`);
+}
 const facts=await read('dist/relay-facts/index.html');
 for(const phrase of ['Last updated: 6 November 2026','What is Relay?','Does Relay identify itself as AI?','Does the business need Relay installed?','Is an outcome guaranteed?','https://apps.apple.com/app/relay-call-assistant/id6804118976']) assert.ok(facts.includes(phrase),`relay-facts: ${phrase}`);
 const llms=await read('dist/llms.txt');
-for(const route of ['/relay-facts','/how-relay-works','/supported-countries-languages','/ai-phone-call-assistant','/call-restaurants-abroad','/restaurant-booking-japan','/make-phone-calls-in-another-language','/ai-appointment-calling','/privacy','/terms','/support']) assert.ok(llms.includes(`https://callwithrelay.com${route}`),`llms.txt: ${route}`);
+for(const route of ['/relay-facts','/how-relay-works','/supported-countries-languages','/ai-phone-call-assistant','/call-restaurants-abroad','/restaurant-booking-japan','/make-phone-calls-in-another-language','/ai-appointment-calling',...exampleRoutes.map(route=>`/${route}`),'/privacy','/terms','/support']) assert.ok(llms.includes(`https://callwithrelay.com${route}`),`llms.txt: ${route}`);
 assert.doesNotMatch(llms,/secret|private endpoint|prompt instruction/i);
+const verifiedExampleClaims={
+  'examples/restaurant-booking-spanish':['real Relay Phase 0 call conducted in Spanish','explicitly confirmed a reservation for two at the requested time','follow-up call explicitly cancelled the same reservation'],
+  'examples/restaurant-booking-japanese':['real Relay Phase 0 call conducted in Japanese','restaurant accepted a reservation','separate call later confirmed that the reservation had been cancelled'],
+  'examples/restaurant-booking-cancellation':['verified UK example','restaurant explicitly confirmed a booking','separate call explicitly confirmed that the same reservation was cancelled'],
+  'examples/breakfast-opening-times':['verified UK call','breakfast opening and service times','human responder supplied the information'],
+  'examples/event-venue-enquiry':['verified UK event enquiry','venue could accommodate the requested group size','giving the user useful information'],
+};
+for(const [route,claims] of Object.entries(verifiedExampleClaims)) {
+  const html=await read(`dist/${route}/index.html`);
+  for(const claim of claims) assert.ok(text(html).includes(claim),`${route}: ${claim}`);
+  for(const phrase of ['business must answer','Results are not guaranteed','supported destinations and languages vary']) assert.ok(text(html).includes(phrase),`${route}: ${phrase}`);
+  assert.doesNotMatch(text(html),/Brightwell|Priya|Casa Mar[eé]|Shibuya|Haneda|Willow Street/i);
+}
 const config=JSON.parse(await read('site.config.json'));
 assert.equal(await read(`dist/${config.indexNowKey}.txt`),`${config.indexNowKey}\n`);
 for(const key of ['privacy','terms','support']){
