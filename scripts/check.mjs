@@ -5,7 +5,8 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>readFile(path.join(root,p),'utf8');
 const text=s=>s.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
-const files=['index.html','privacy/index.html','terms/index.html','support/index.html','privacy.html','terms.html','support.html','404.html'];
+const productRoutes=['ai-phone-call-assistant','call-restaurants-abroad','restaurant-booking-japan','make-phone-calls-in-another-language','ai-appointment-calling','how-relay-works','supported-countries-languages'];
+const files=['index.html',...productRoutes.map(route=>`${route}/index.html`),'privacy/index.html','terms/index.html','support/index.html','privacy.html','terms.html','support.html','404.html'];
 let links=0;
 for (const file of files){
   const html=await read(`dist/${file}`);
@@ -27,6 +28,9 @@ for (const file of files){
     assert.match(html, /Add to calendar/);
     assert.doesNotMatch(html, /<video[^>]+autoplay/);
     assert.match(html, /href="https:\/\/apps\.apple\.com\/gb\/app\/relay\/id6804118976"/);
+    assert.match(html, /Relay is an AI phone call assistant for iPhone that calls real businesses on your behalf/);
+    assert.match(html, /"@type":"SoftwareApplication"/);
+    assert.match(html, /"operatingSystem":"iOS"/);
   }
   else assert.doesNotMatch(html, /<script\b/);
   for(const img of html.matchAll(/<img\b[^>]+>/g)) assert.match(img[0],/alt="[^"]*"/);
@@ -42,6 +46,21 @@ for (const file of files){
     links++;
   }
 }
+for (const route of productRoutes) {
+  const html=await read(`dist/${route}/index.html`);
+  assert.match(html,new RegExp(`<link rel="canonical" href="https://callwithrelay\\.com/${route}">`));
+  assert.match(html,/Download on the App Store/);
+  assert.match(html,/related-links/);
+}
+const howRelayWorks=await read('dist/how-relay-works/index.html');
+for(const phrase of ['Tell Relay what you need','Relay makes the call','Relay handles the conversation','You receive the available outcome']) assert.match(howRelayWorks,new RegExp(phrase));
+const coverage=await read('dist/supported-countries-languages/index.html');
+for(const phrase of ['18 destinations','English','Japanese','Spanish','French','German','Italian','European Portuguese']) assert.match(coverage,new RegExp(phrase));
+const robots=await read('dist/robots.txt');
+assert.match(robots,/User-agent: OAI-SearchBot\nAllow: \//);
+assert.match(robots,/User-agent: \*\nAllow: \//);
+const sitemap=await read('dist/sitemap.xml');
+for(const route of ['/',...productRoutes.map(route=>`/${route}`),'/privacy','/terms','/support']) assert.match(sitemap,new RegExp(`<loc>https://callwithrelay\\.com${route === '/' ? '/' : route}<\\/loc>`));
 for(const key of ['privacy','terms','support']){
   const original=(await read(`src/legal/${key}.html`)).match(/<main[^>]*>([\s\S]*?)<\/main>/)[1];
   const rendered=(await read(`dist/${key}/index.html`)).match(/<article class="legal-body">([\s\S]*?)<\/article>/)[1];
